@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Animated Clock</title>
+    <title></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,148 +13,200 @@
     <style>
       * {
         margin: 0;
+        padding: 0;
         box-sizing: border-box;
       }
       body {
-        font-family: "League Spartan", serif;
+        font-family: "League Spartan", sans-serif;
         color: white;
+        overflow: hidden;
+        background: linear-gradient(120deg, #2c3e50, #4ca1af, #2c3e50);
+        background-size: 300% 300%;
+        animation: bgShift 10s ease infinite;
       }
+
+      @keyframes bgShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
       .container {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
         height: 100vh;
-        background-color: black;
-      }
-      .container1 {
-        border: 3px solid rgba(255, 255, 255, 0.397);
-        border-radius: 30px;
-        padding: 80px;
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-        background-color: rgba(128, 128, 128, 0.397);
-      }
-      .clockhead {
-        background: linear-gradient(to right, skyblue, #ff0000, #831983);
-        color: transparent;
-        background-clip: text;
-        animation: pulse 2s infinite ease-in-out;
-      }
-      @keyframes pulse {
-        0%, 100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.1);
-        }
-      }
-      .clockhead h1 {
-        font-size: 60px;
-        font-weight: 500;
-      }
-      .body {
-        background-color: gray;
-        padding: 3px;
-        border-radius: 10px;
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         overflow: hidden;
       }
-      .clock {
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        background-color: black;
-        gap: 10px;
-        padding: 20px 40px;
-        z-index: 5;
+
+      .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
       }
-      .linear {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(to right, skyblue, #ed5656, #831983);
-        background-clip: text;
-        color: transparent;
-        font-size: 100px;
-        width: 900px;
+
+      .particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        animation: floatParticles 12s infinite ease-in-out;
       }
-      .hourse h1,
-      .minutes h1,
-      .secounds h1 {
-        animation: wave 1s ease-in-out infinite;
-        background: linear-gradient(to right, skyblue, #ed5656, #831983);
-        background-clip: text;
-        color: transparent;
-      }
-      @keyframes wave {
+
+      @keyframes floatParticles {
         0% {
-          transform: translateY(0);
+          transform: translateY(0) scale(0.5);
+          opacity: 1;
         }
         50% {
-          transform: translateY(-10px);
+          opacity: 0.7;
         }
         100% {
-          transform: translateY(0);
+          transform: translateY(-100vh) scale(1);
+          opacity: 0;
         }
       }
-      .body::after {
-        z-index: 0;
-        content: "";
-        width: 550px;
-        height: 550px;
-        background: linear-gradient(to right, gray, #ff0000);
-        position: absolute;
-        top: -146%;
-        left: 371px;
-        animation: anime 5s linear infinite;
-        transform-origin: bottom left;
+
+      .container1 {
+        position: relative;
+        z-index: 2;
+        padding: 80px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
       }
-      @keyframes anime {
-        0% {
-          transform: rotate(0);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
+
+      .container1:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 50px rgba(255, 255, 255, 0.5);
       }
-      .timerdots h1 {
-        animation: blink 1.5s step-end infinite;
-        margin-bottom: 50px;
-        background: linear-gradient(to right, skyblue, #ed5656, #831983);
+
+      .clockhead h1 {
+        font-size: 50px;
+        font-weight: 800;
+        text-transform: uppercase;
+        background: linear-gradient(45deg, #ff6f61, #f3c623, #6ee7b7);
+        background-size: 300% 300%;
         background-clip: text;
         color: transparent;
+        animation: textGradient 6s infinite ease;
       }
+
+      @keyframes textGradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .body {
+        width: 430px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        animation: glowEffect 4s infinite alternate;
+      }
+
+      @keyframes glowEffect {
+        0% {
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+        }
+      }
+
+      .clock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .linear h1 {
+        font-size: 100px;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
+          0 0 40px rgba(0, 255, 255, 0.5);
+        animation: digitGlow 3s infinite alternate;
+      }
+
+      @keyframes digitGlow {
+        0% {
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
+            0 0 30px rgba(0, 255, 255, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 30px rgba(255, 255, 255, 1),
+            0 0 50px rgba(0, 255, 255, 1);
+        }
+      }
+
+      .timerdots h1 {
+        animation: blink 1.2s infinite ease-in-out;
+      }
+
       @keyframes blink {
         50% {
-          opacity: 0.4;
-        }
-        100% {
-          opacity: 1;
+          opacity: 0.5;
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="particles">
+        <div class="particle" style="left: 10%; animation-duration: 8s;"></div>
+        <div class="particle" style="left: 30%; animation-duration: 6s;"></div>
+        <div class="particle" style="left: 50%; animation-duration: 12s;"></div>
+        <div class="particle" style="left: 70%; animation-duration: 10s;"></div>
+        <div class="particle" style="left: 90%; animation-duration: 7s;"></div>
+      </div>
+
       <div class="container1">
         <div class="clockhead">
-          <h1 id="currentDate"></h1>
+          <h1 id="currentDate">Loading...</h1>
         </div>
         <div class="body">
           <div class="clock">
             <div class="linear">
-              <div class="hourse"><h1 id="hours">00</h1></div>
-              <div class="timerdots"><h1>:</h1></div>
-              <div class="minutes"><h1 id="minutes">00</h1></div>
-              <div class="timerdots"><h1>:</h1></div>
-              <div class="secounds"><h1 id="seconds">00</h1></div>
+              <h1 id="hours">00</h1>
+            </div>
+            <div class="timerdots">
+              <h1>:</h1>
+            </div>
+            <div class="linear">
+              <h1 id="minutes">00</h1>
+            </div>
+            <div class="timerdots">
+              <h1>:</h1>
+            </div>
+            <div class="linear">
+              <h1 id="seconds">00</h1>
             </div>
           </div>
         </div>
@@ -163,9 +215,8 @@
 
     <script>
       function updateClock() {
-      
         const now = new Date();
-        const currentDate = now.toLocaleDateString(); 
+        const currentDate = now.toLocaleDateString();
         const hours = now.getHours().toString().padStart(2, "0");
         const minutes = now.getMinutes().toString().padStart(2, "0");
         const seconds = now.getSeconds().toString().padStart(2, "0");
@@ -177,7 +228,6 @@
       }
 
       setInterval(updateClock, 1000);
-
       updateClock();
     </script>
   </body>

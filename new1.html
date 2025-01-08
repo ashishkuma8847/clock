@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: radial-gradient(circle at center, #050505, #181830, #2e2e4f);
+        color: white;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        position: relative;
+        width: 450px;
+        height: 450px;
+      }
+
+      .neon-ring {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        animation: pulseRing 5s infinite alternate ease-in-out;
+      }
+
+      .neon-ring::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        height: 90%;
+        border-radius: 50%;
+        border: 6px solid transparent;
+        border-image: linear-gradient(to right, #ff00ff, #00ffff, #ff00ff);
+        border-image-slice: 1;
+        animation: rotateRing 8s linear infinite;
+      }
+
+      @keyframes pulseRing {
+        0% {
+          box-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.8);
+        }
+      }
+
+      @keyframes rotateRing {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .clock-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 50%;
+        box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 60px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6);
+        gap: 10px;
+      }
+
+      .time h1:hover {
+        animation: glitch 1s infinite;
+      }
+
+      @keyframes glitch {
+        0% {
+          transform: translateX(0);
+        }
+        33% {
+          transform: translateX(-2px);
+        }
+        66% {
+          transform: translateX(2px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .date {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.7);
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="neon-ring"></div>
+
+      <div class="clock-wrapper">
+        <div class="time">
+          <h1 id="hours">00</h1>
+          <h1>:</h1>
+          <h1 id="minutes">00</h1>
+          <h1>:</h1>
+          <h1 id="seconds">00</h1>
+        </div>
+        <div class="date" id="currentDate"></div>
+      </div>
+    </div>
+
+    <script>
+      function updateClock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+        const date = now.toLocaleDateString();
+
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+        document.getElementById("currentDate").textContent = date;
+      }
+
+      document.querySelectorAll("h1").forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+          const audio = new Audio("https://www.soundjay.com/button/sounds/button-10.mp3");
+          audio.volume = 0.3;
+          audio.play();
+        });
+      });
+
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "League Spartan", sans-serif;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+        animation: backgroundPulse 15s infinite ease-in-out;
+      }
+
+      @keyframes backgroundPulse {
+        0% {
+          background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+        }
+        50% {
+          background: radial-gradient(circle at center, #ff512f, #dd2476, #ff0066);
+        }
+        100% {
+          background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+        }
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        animation: floatParticle 8s linear infinite;
+        filter: blur(2px);
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(0px) scale(0.5);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateY(-50vh) scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) scale(0.8);
+          opacity: 0.3;
+        }
+      }
+
+      .clock-container {
+        width: 850px;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotateX(25deg) rotateY(25deg);
+        perspective: 1000px;
+        animation: clockHover 15s infinite alternate ease-in-out;
+        z-index: 2;
+      }
+
+      @keyframes clockHover {
+        0% {
+          transform: translate(-50%, -50%) rotateX(25deg) rotateY(25deg);
+        }
+        50% {
+          transform: translate(-50%, -50%) rotateX(15deg) rotateY(-15deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotateX(25deg) rotateY(25deg);
+        }
+      }
+
+      .clock-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 15px 50px rgba(0, 255, 255, 0.7);
+        animation: clockGlow 3s infinite alternate;
+      }
+
+      @keyframes clockGlow {
+        0% {
+          box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+        100% {
+          box-shadow: 0 20px 60px rgba(0, 255, 255, 0.8);
+        }
+      }
+
+      .clock-header {
+        font-size: 60px;
+        color: white;
+        background: linear-gradient(to right, #00c6ff, #0072ff);
+        background-clip: text;
+        color: transparent;
+        animation: textShimmer 7s linear infinite;
+      }
+
+      @keyframes textShimmer {
+        0% {
+          background-position: 0%;
+        }
+        100% {
+          background-position: 200%;
+        }
+      }
+
+      .clock-display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        font-size: 100px;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.8);
+      }
+
+      .clock-display:hover h1 {
+        animation: hoverPulse 1.5s infinite;
+      }
+
+      @keyframes hoverPulse {
+        0% {
+          transform: scale(1);
+          text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.8);
+        }
+        50% {
+          transform: scale(1.1);
+          text-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="particles">
+        <div class="particle" style="left: 10%; animation-duration: 12s;"></div>
+        <div class="particle" style="left: 30%; animation-duration: 8s;"></div>
+        <div class="particle" style="left: 50%; animation-duration: 10s;"></div>
+        <div class="particle" style="left: 70%; animation-duration: 9s;"></div>
+        <div class="particle" style="left: 90%; animation-duration: 11s;"></div>
+      </div>
+
+      <div class="clock-container">
+        <div class="clock-wrapper">
+          <div class="clock-header" id="currentDate">Loading...</div>
+          <div class="clock-display">
+            <h1 id="hours">00</h1>
+            <h1>:</h1>
+            <h1 id="minutes">00</h1>
+            <h1>:</h1>
+            <h1 id="seconds">00</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function updateClock() {
+        const now = new Date();
+        const currentDate = now.toLocaleDateString();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+
+        document.getElementById("currentDate").textContent = currentDate;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+      }
+
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>

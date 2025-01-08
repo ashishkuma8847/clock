@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "League Spartan", sans-serif;
+        overflow: hidden;
+        height: 100vh;
+        background: radial-gradient(circle at center, #090909, #1b1b34, #2a2a55);
+        animation: backgroundPulse 15s ease-in-out infinite;
+      }
+
+      @keyframes backgroundPulse {
+        0% {
+          background: radial-gradient(circle at center, #090909, #1b1b34, #2a2a55);
+        }
+        50% {
+          background: radial-gradient(circle at center, #1e1e4c, #3a3a73, #5252b3);
+        }
+        100% {
+          background: radial-gradient(circle at center, #090909, #1b1b34, #2a2a55);
+        }
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        animation: particleMove 8s linear infinite;
+        filter: blur(2px);
+      }
+
+      @keyframes particleMove {
+        0% {
+          transform: translate(-50px, -50px) rotate(0deg);
+        }
+        50% {
+          transform: translate(50px, 50px) rotate(180deg);
+        }
+        100% {
+          transform: translate(-50px, -50px) rotate(360deg);
+        }
+      }
+
+      .clock-wrapper {
+        position: relative;
+        z-index: 2;
+        perspective: 1000px;
+      }
+
+      .clock {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 50px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.5);
+        animation: glowPulse 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes glowPulse {
+        0% {
+          box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 40px rgba(0, 255, 255, 0.8), 0 0 60px rgba(255, 0, 255, 0.8);
+        }
+      }
+
+      .clock h1 {
+        font-size: 60px;
+        color: white;
+        background: linear-gradient(90deg, #ff007c, #5700ff, #00ffff);
+    background-clip: text;
+        color: transparent;
+        animation: textShimmer 6s infinite linear;
+      }
+
+      @keyframes textShimmer {
+        0% {
+          background-position: 0%;
+        }
+        100% {
+          background-position: 200%;
+        }
+      }
+
+      .time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        font-size: 100px;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.7);
+      }
+
+      .time h1:hover {
+        animation: hoverEffect 1s infinite;
+      }
+
+      @keyframes hoverEffect {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="particles">
+        <div class="particle" style="top: 10%; left: 30%; animation-duration: 6s;"></div>
+        <div class="particle" style="top: 40%; left: 70%; animation-duration: 10s;"></div>
+        <div class="particle" style="top: 70%; left: 50%; animation-duration: 8s;"></div>
+      </div>
+
+      <div class="clock-wrapper">
+        <div class="clock">
+          <h1 id="date">Loading...</h1>
+          <div class="time">
+            <h1 id="hours">00</h1>
+            <h1>:</h1>
+            <h1 id="minutes">00</h1>
+            <h1>:</h1>
+            <h1 id="seconds">00</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function updateClock() {
+        const now = new Date();
+        const date = now.toLocaleDateString();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+
+        document.getElementById("date").textContent = date;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+      }
+
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>
