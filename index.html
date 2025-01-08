@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Animated Clock</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
       rel="stylesheet"
     />
     <style>
       * {
         margin: 0;
+        box-sizing: border-box;
       }
       body {
         font-family: "League Spartan", serif;
@@ -33,16 +34,21 @@
         display: flex;
         flex-direction: column;
         gap: 50px;
+        background-color: rgba(128, 128, 128, 0.397);
       }
       .clockhead {
-        background: linear-gradient(
-          to right,
-          skyblue,
-          rgb(237, 86, 86),
-          rgb(131, 25, 131)
-        );
+        background: linear-gradient(to right, skyblue, #ff0000, #831983);
         color: transparent;
         background-clip: text;
+        animation: pulse 2s infinite ease-in-out;
+      }
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
       }
       .clockhead h1 {
         font-size: 60px;
@@ -59,14 +65,14 @@
         overflow: hidden;
       }
       .clock {
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
-
         border-radius: 10px;
         background-color: black;
         gap: 10px;
-        padding: 20px 40px 20px 40px;
+        padding: 20px 40px;
         z-index: 5;
       }
       .linear {
@@ -75,10 +81,28 @@
         justify-content: center;
         background: linear-gradient(to right, skyblue, #ed5656, #831983);
         background-clip: text;
-        font-size: 100px;
         color: transparent;
+        font-size: 100px;
         width: 900px;
-
+      }
+      .hourse h1,
+      .minutes h1,
+      .secounds h1 {
+        animation: wave 1s ease-in-out infinite;
+        background: linear-gradient(to right, skyblue, #ed5656, #831983);
+        background-clip: text;
+        color: transparent;
+      }
+      @keyframes wave {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
       }
       .body::after {
         z-index: 0;
@@ -100,14 +124,20 @@
           transform: rotate(360deg);
         }
       }
-      .hourse {
-        margin-top: 30px;
+      .timerdots h1 {
+        animation: blink 1.5s step-end infinite;
+        margin-bottom: 50px;
+        background: linear-gradient(to right, skyblue, #ed5656, #831983);
+        background-clip: text;
+        color: transparent;
       }
-      .minutes {
-        margin-top: 30px;
-      }
-      .secounds {
-        margin-top: 30px;
+      @keyframes blink {
+        50% {
+          opacity: 0.4;
+        }
+        100% {
+          opacity: 1;
+        }
       }
     </style>
   </head>
@@ -124,7 +154,6 @@
               <div class="timerdots"><h1>:</h1></div>
               <div class="minutes"><h1 id="minutes">00</h1></div>
               <div class="timerdots"><h1>:</h1></div>
-
               <div class="secounds"><h1 id="seconds">00</h1></div>
             </div>
           </div>
@@ -134,24 +163,21 @@
 
     <script>
       function updateClock() {
-        // Get current date and time
+      
         const now = new Date();
-        const currentDate = now.toLocaleDateString(); // Current date in 'mm/dd/yyyy' format
+        const currentDate = now.toLocaleDateString(); 
         const hours = now.getHours().toString().padStart(2, "0");
         const minutes = now.getMinutes().toString().padStart(2, "0");
         const seconds = now.getSeconds().toString().padStart(2, "0");
 
-        // Update the clock
         document.getElementById("currentDate").textContent = currentDate;
         document.getElementById("hours").textContent = hours;
         document.getElementById("minutes").textContent = minutes;
         document.getElementById("seconds").textContent = seconds;
       }
 
-      // Run the updateClock function every second
       setInterval(updateClock, 1000);
 
-      // Initial call to display the clock immediately
       updateClock();
     </script>
   </body>
